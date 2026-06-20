@@ -4,7 +4,7 @@ numpy
 plotly
 scikit-learn==1.8.0
 xgboost==3.2.0
-groq
+groq>=0.30.0
 pyarrow
 joblib
 category-encoders
