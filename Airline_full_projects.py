@@ -934,23 +934,23 @@ with tab3:
             "Thinking..."
         ):
 
-            response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[
-                    {
-                        "role":"system",
-                        "content":SYSTEM_PROMPT
-                    }
-                ] + st.session_state.chat_messages,
-                temperature=0.2
-            )
-
-            answer = (
-                response
-                .choices[0]
-                .message
-                .content
-            )
+            try:
+                response = client.chat.completions.create(
+                    model="llama-3.1-8b-instant",
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": SYSTEM_PROMPT
+                        }
+                    ] + st.session_state.chat_messages,
+                    temperature=0.2
+                )
+            
+                answer = response.choices[0].message.content
+            
+            except Exception as e:
+                answer = f"Error: {str(e)}"
+                st.error(answer)
 
         st.session_state.chat_messages.append(
             {
