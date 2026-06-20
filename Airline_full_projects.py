@@ -756,10 +756,15 @@ with tab2:
         with st.spinner(
             "Predicting Flight Delay..."
         ):
-
-            prediction = model.predict(
-                pred_df
-            )[0]
+        
+            try:
+                prediction = model.predict(
+                    pred_df
+                )[0]
+        
+            except Exception as e:
+                st.error(f"Prediction Error: {e}")
+                st.stop()
 
         delay_minutes = round(prediction)
 
