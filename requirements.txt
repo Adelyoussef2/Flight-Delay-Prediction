@@ -7,3 +7,6 @@ xgboost
 groq
 pyarrow
 joblib
+category-encoders
+scipy
+pillow
