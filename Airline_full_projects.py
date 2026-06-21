@@ -238,9 +238,6 @@ class HistoricalFeaturesTransformer(BaseEstimator, TransformerMixin):
         return X
 import joblib
 
-st.write("Before Predict")
-st.write(pred_df)
-
 prediction = model.predict(pred_df)[0]
 
 def get_season(month):
