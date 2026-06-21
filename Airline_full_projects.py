@@ -238,7 +238,7 @@ class HistoricalFeaturesTransformer(BaseEstimator, TransformerMixin):
         return X
 import joblib
 
-prediction = model.predict(pred_df)[0]
+model = joblib.load("flight_delay_model.pkl")
 
 def get_season(month):
     if month in [12,1,2]:
