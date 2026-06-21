@@ -757,14 +757,8 @@ with tab2:
             "Predicting Flight Delay..."
         ):
         
-            try:
-                prediction = model.predict(
-                    pred_df
-                )[0]
-        
-            except Exception as e:
-                st.error(f"Prediction Error: {e}")
-                st.stop()
+            st.write(pred_df)
+            st.stop()
 
         delay_minutes = round(prediction)
 
