@@ -752,7 +752,8 @@ with tab2:
             'DEP_HOUR': [dep_hour]
 
         })
-
+        st.write("Before Predict")
+        st.write(pred_df)
         with st.spinner(
             "Predicting Flight Delay..."
         ):
