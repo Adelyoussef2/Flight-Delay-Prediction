@@ -733,15 +733,15 @@ with tab2:
         "Predict Delay",
         use_container_width=True
     ):
-
+    
         dep_time = dep_hour * 100
-
+    
         arr_time = dep_time + elapsed
-
+    
         is_weekend = 1 if day in [6,7] else 0
-
+    
         pred_df = pd.DataFrame({
-
+    
             'AIRLINE_CODE': [airline],
             'ORIGIN': [origin],
             'DEST': [dest],
@@ -754,8 +754,19 @@ with tab2:
             'IS_WEEKEND': [is_weekend],
             'ROUTE': [route],
             'DEP_HOUR': [dep_hour]
-
+    
         })
+    
+        st.write("Reached Predict")
+        st.write(pred_df)
+    
+        prediction = 10
+    
+        st.write("After Predict")
+    
+        delay_minutes = round(prediction)
+    
+        st.success(f"Prediction Test Success: {delay_minutes} Minutes")
         st.write("Before Predict")
         st.write(pred_df)
         with st.spinner(
