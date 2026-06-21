@@ -240,8 +240,7 @@ import joblib
 
 model = joblib.load("flight_delay_model.pkl")
 
-st.write(type(model))
-st.write(model)
+st.write(model.named_steps.keys())
 
 def get_season(month):
     if month in [12,1,2]:
