@@ -238,26 +238,7 @@ class HistoricalFeaturesTransformer(BaseEstimator, TransformerMixin):
         return X
 import joblib
 
-with st.spinner(
-    "Predicting Flight Delay..."
-):
-
-    try:
-
-        st.write("Before Historical")
-
-        x1 = model.named_steps["historical_features"].transform(pred_df)
-
-        st.write("After Historical")
-
-        st.write(x1)
-
-        st.stop()
-
-    except Exception as e:
-
-        st.error(str(e))
-        st.stop()
+model = joblib.load("flight_delay_model.pkl")
 
 def get_season(month):
     if month in [12,1,2]:
@@ -775,9 +756,10 @@ with tab2:
         with st.spinner(
             "Predicting Flight Delay..."
         ):
-        
-            st.write(pred_df)
-            st.stop()
+
+            prediction = model.predict(
+                pred_df
+            )[0]
 
         delay_minutes = round(prediction)
 
