@@ -827,4 +827,138 @@ with tab2:
         - Flight Distance
         - Airport Congestion
         """)
+with tab3:
 
+    st.markdown("""
+    <h2 style='color:white'>
+    AI Project Assistant
+    </h2>
+    """, unsafe_allow_html=True)
+
+    try:
+
+        with open(
+            "project_summary.md",
+            "r",
+            encoding="utf-8"
+        ) as f:
+
+            project_summary = f.read()
+
+    except:
+
+        project_summary = "Project documentation not found."
+
+    dataset_summary = f"""
+
+    Total Flights: {len(df):,}
+
+    Average Delay:
+    {df['ARR_DELAY'].mean():.2f} minutes
+
+    Number of Airlines:
+    {df['AIRLINE_CODE'].nunique()}
+
+    Number of Airports:
+    {df['ORIGIN'].nunique()}
+
+    Most Delayed Airline:
+    {
+        df.groupby('AIRLINE_CODE')
+        ['ARR_DELAY']
+        .mean()
+        .idxmax()
+    }
+
+    Most Delayed Route:
+    {
+        df.groupby('ROUTE')
+        ['ARR_DELAY']
+        .mean()
+        .idxmax()
+    }
+
+    """
+
+    SYSTEM_PROMPT = f"""
+    You are an AI assistant for a Flight Delay Prediction Project.
+
+    Use the following project documentation:
+
+    {project_summary}
+
+    Dataset Insights:
+
+    {dataset_summary}
+
+    Answer questions about the project,
+    dashboard, machine learning model,
+    dataset insights and business problem.
+
+    If information is unavailable,
+    say so honestly.
+    """
+
+    client = Groq(
+    api_key=st.secrets["GROQ_API_KEY"]
+    )
+
+    if "chat_messages" not in st.session_state:
+
+        st.session_state.chat_messages = []
+
+    for msg in st.session_state.chat_messages:
+
+        with st.chat_message(msg["role"]):
+
+            st.write(msg["content"])
+
+    prompt = st.chat_input(
+        "Ask me anything about the project..."
+    )
+
+    if prompt:
+
+        st.session_state.chat_messages.append(
+            {
+                "role":"user",
+                "content":prompt
+            }
+        )
+
+        with st.chat_message("user"):
+
+            st.write(prompt)
+
+        with st.spinner(
+            "Thinking..."
+        ):
+
+            response = client.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[
+                    {
+                        "role":"system",
+                        "content":SYSTEM_PROMPT
+                    }
+                ] + st.session_state.chat_messages,
+                temperature=0.2
+            )
+
+            answer = (
+                response
+                .choices[0]
+                .message
+                .content
+            )
+
+        st.session_state.chat_messages.append(
+            {
+                "role":"assistant",
+                "content":answer
+            }
+        )
+
+        with st.chat_message("assistant"):
+
+            st.write(answer)
