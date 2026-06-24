@@ -237,12 +237,13 @@ class HistoricalFeaturesTransformer(BaseEstimator, TransformerMixin):
 
         return X
 import joblib
+@st.cache_resource
+def load_model():
+    return joblib.load("flight_delay_model.pkl")  # use your actual filename
 
-st.write("Reached Predict")
+model = load_model()
 
-prediction = 10
 
-st.write("After Predict")
 
 def get_season(month):
     if month in [12,1,2]:
