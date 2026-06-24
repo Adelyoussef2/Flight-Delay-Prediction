@@ -1,12 +1,12 @@
 streamlit
-pandas
-numpy
+pandas==2.3.1
+numpy==2.3.2
 plotly
 scikit-learn==1.8.0
 xgboost==3.2.0
 groq>=0.30.0
 pyarrow
-joblib
-category-encoders
+joblib==1.5.3
+category-encoders==2.8.1
 scipy
 pillow
