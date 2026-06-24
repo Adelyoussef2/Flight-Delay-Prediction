@@ -827,7 +827,11 @@ with tab2:
         - Flight Distance
         - Airport Congestion
         """)
+SKIP_TAB3 = True
 with tab3:
+    if SKIP_TAB3:
+        st.write("Tab 3 disabled for testing")
+    else:
 
     st.markdown("""
     <h2 style='color:white'>
