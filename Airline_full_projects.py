@@ -237,13 +237,8 @@ class HistoricalFeaturesTransformer(BaseEstimator, TransformerMixin):
 
         return X
 import joblib
-@st.cache_resource
-def load_model():
-    return joblib.load("flight_delay_model.pkl")  # use your actual filename
 
-model = load_model()
-
-
+model = joblib.load("flight_delay_model.pkl")
 
 def get_season(month):
     if month in [12,1,2]:
@@ -734,15 +729,15 @@ with tab2:
         "Predict Delay",
         use_container_width=True
     ):
-    
+
         dep_time = dep_hour * 100
-    
+
         arr_time = dep_time + elapsed
-    
+
         is_weekend = 1 if day in [6,7] else 0
-    
+
         pred_df = pd.DataFrame({
-    
+
             'AIRLINE_CODE': [airline],
             'ORIGIN': [origin],
             'DEST': [dest],
@@ -755,11 +750,9 @@ with tab2:
             'IS_WEEKEND': [is_weekend],
             'ROUTE': [route],
             'DEP_HOUR': [dep_hour]
-    
+
         })
-    
-       
-    
+
         with st.spinner(
             "Predicting Flight Delay..."
         ):
