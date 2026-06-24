@@ -145,7 +145,12 @@ def add_bg():
         unsafe_allow_html=True
     )
 
-add_bg()
+try:
+    add_bg()
+except Exception as e:
+    st.error("Background image loading failed:")
+    st.code(traceback.format_exc())
+    st.stop()
 @st.cache_data
 def load_data():
     return pd.read_parquet("Clean_flight_Data.parquet")
