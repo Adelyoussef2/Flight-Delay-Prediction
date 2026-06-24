@@ -758,18 +758,8 @@ with tab2:
     
         })
     
-        st.write("Reached Predict")
-        st.write(pred_df)
+       
     
-        prediction = 10
-    
-        st.write("After Predict")
-    
-        delay_minutes = round(prediction)
-    
-        st.success(f"Prediction Test Success: {delay_minutes} Minutes")
-        st.write("Before Predict")
-        st.write(pred_df)
         with st.spinner(
             "Predicting Flight Delay..."
         ):
