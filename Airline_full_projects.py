@@ -371,7 +371,7 @@ with tab1:
             text-align:center;
             box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
         ">
-            <h4 style="color:white;">✈️ Total Flights</h4>
+            <h4 style="color:white;"> Total Flights</h4>
             <h1 style="color:#60a5fa;">{total_flights:,}</h1>
         </div>
         """, unsafe_allow_html=True)
