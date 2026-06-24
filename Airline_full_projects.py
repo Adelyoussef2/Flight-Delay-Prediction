@@ -4,7 +4,6 @@ import plotly.express as px
 from groq import Groq
 import base64
 from sklearn.base import BaseEstimator, TransformerMixin
-import traceback
 
 def style_chart(fig):
 
@@ -145,22 +144,12 @@ def add_bg():
         unsafe_allow_html=True
     )
 
-try:
-    add_bg()
-except Exception as e:
-    st.error("Background image loading failed:")
-    st.code(traceback.format_exc())
-    st.stop()
+add_bg()
 @st.cache_data
 def load_data():
     return pd.read_parquet("Clean_flight_Data.parquet")
 
-try:
-    df = load_data()
-except Exception as e:
-    st.error("Data loading failed:")
-    st.code(traceback.format_exc())
-    st.stop()
+df = load_data()
 dataset_summary = f"""
 Total Flights: {len(df):,}
 
@@ -249,12 +238,7 @@ class HistoricalFeaturesTransformer(BaseEstimator, TransformerMixin):
         return X
 import joblib
 
-try:
-    model = joblib.load("flight_delay_model.pkl")
-except Exception as e:
-    st.error("Model loading failed:")
-    st.code(traceback.format_exc())
-    st.stop()
+model = joblib.load("flight_delay_model.pkl")
 
 def get_season(month):
     if month in [12,1,2]:
