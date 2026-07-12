@@ -5,6 +5,25 @@ from groq import Groq
 import base64
 from sklearn.base import BaseEstimator, TransformerMixin
 
+import traceback
+import joblib
+
+st.write("App Started")
+
+try:
+    add_bg()
+    st.write("Background Loaded")
+
+    df = load_data()
+    st.write(f"Data Loaded: {df.shape}")
+
+    model = joblib.load("flight_delay_model.pkl")
+    st.write("Model Loaded")
+
+except Exception:
+    st.code(traceback.format_exc())
+    st.stop()
+
 def style_chart(fig):
 
     fig.update_layout(
