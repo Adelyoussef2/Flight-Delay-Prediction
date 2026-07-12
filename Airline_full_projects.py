@@ -5,24 +5,6 @@ from groq import Groq
 import base64
 from sklearn.base import BaseEstimator, TransformerMixin
 
-import traceback
-import joblib
-
-st.write("App Started")
-
-try:
-    add_bg()
-    st.write("Background Loaded")
-
-    df = load_data()
-    st.write(f"Data Loaded: {df.shape}")
-
-    model = joblib.load("flight_delay_model.pkl")
-    st.write("Model Loaded")
-
-except Exception:
-    st.code(traceback.format_exc())
-    st.stop()
 
 def style_chart(fig):
 
@@ -164,12 +146,27 @@ def add_bg():
     )
 
 add_bg()
+
 @st.cache_data
 def load_data():
     return pd.read_parquet("Clean_flight_Data.parquet")
 
-df = load_data()
+import traceback
+import joblib
+
+try:
+    df = load_data()
+    st.success(f"Data Loaded: {df.shape}")
+
+    model = joblib.load("flight_delay_model.pkl")
+    st.success("Model Loaded Successfully")
+
+except Exception:
+    st.code(traceback.format_exc())
+    st.stop()
+
 dataset_summary = f"""
+
 Total Flights: {len(df):,}
 
 Average Delay: {df['ARR_DELAY'].mean():.2f} minutes
